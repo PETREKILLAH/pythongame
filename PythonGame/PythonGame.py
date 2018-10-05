@@ -15,7 +15,16 @@ class Config:
     DiagonalMovement = True
     WrapScreen = False
     
-
+class Projectile:
+    def __init__(self,x,y,maxHealth,moveDelay):
+        self.x = x
+        self.y = y
+        self.maxHealth = maxHealth
+        self.health = maxHealth
+        self.moveDelay = moveDelay
+        self.moveCounter = 0
+        self.direction =  0
+        self.owner = ""
 
 class Player:
     def __init__(self,x,y,maxHealth,moveDelay = 2):
@@ -155,10 +164,12 @@ def renderMap():
             temp[player.x] = "@"
             row[player.y] = "".join(temp)
 
+    
     for mob in npc[currentRoom]:
-        temp = list(row[mob.y])
-        temp[mob.x] = "#"
-        row[mob.y] = "".join(temp)
+        if mob.x <= roomLen - 1 and mob.y <= roomWid - 1 and mob.x >= 0 and mob.y >= 0:
+            temp = list(row[mob.y])
+            temp[mob.x] = "#"
+            row[mob.y] = "".join(temp)
         
     localRoom = "\n".join(row)
     print(localRoom)
